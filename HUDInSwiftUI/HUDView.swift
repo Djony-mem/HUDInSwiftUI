@@ -7,14 +7,24 @@
 
 import SwiftUI
 
-struct HUDView: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+struct HUDView<Content: View>: View {
+    var content: Content
+    @ViewBuilder var body: some View {
+        content
+            .padding(.horizontal, 10)
+            .padding(10)
+            .background(
+                Capsule()
+                    .foregroundColor(Color.white)
+                    .shadow(color: Color(.black).opacity(0.15
+                    ), radius: 10, x: 0, y: 10)
+            )
     }
 }
 
-struct HUDView_Previews: PreviewProvider {
+struct HUD_Previews: PreviewProvider {
     static var previews: some View {
-        HUDView()
+        HUDView(content: Label("I like", systemImage: "heart.fill"))
     }
 }
+
