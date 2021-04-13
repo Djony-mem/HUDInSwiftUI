@@ -11,21 +11,7 @@ struct ContentView: View {
     @State private var showHUD = false
     var body: some View {
         ZStack {
-            TabView {
-                ForEach(0..<3) { index in
-                    ZStack{
-                        Image(systemName: "heart")
-                            .resizable()
-                            .frame(width: 50, height: 50)
-                        Button("\(index)" ) {
-                            withAnimation {
-                                self.showHUD.toggle()
-                                dismissHUD()
-                            }
-                        }
-                    }
-                }
-            }
+            tabView
             .tabViewStyle(PageTabViewStyle())
             VStack {
                 HUDView(content: Label("I like", systemImage: "heart.fill"))
@@ -35,11 +21,24 @@ struct ContentView: View {
             }
         }
     }
-    func dismissHUD() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+    
+    private var tabView: some View {
+        TabView {
+            ForEach(0..<3) { _ in
+                    Button("Show HUD") {
+                            self.showHUD.toggle()
+                            dismissHUD()
+                }
+            }
+        }
+    }
+    
+    private func dismissHUD() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
             self.showHUD = false
         }
     }
+    
 }
 
 struct ContentView_Previews: PreviewProvider {
